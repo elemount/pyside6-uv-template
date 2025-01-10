@@ -21,16 +21,13 @@ jobs:
       - name: Sync
         run: uv sync
 
-      - name: Activate Environment
+      - name: Build Executable
         run: |
           if [ "${{ runner.os }}" = "Windows" ]; then
             .venv/scripts/activate
           else
-            .venv/bin/activate
+            . .venv/bin/activate
           fi
-
-      - name: Build
-        run: |
           pyinstaller --name="app" --windowed --onefile main.py
 
       - name: Create Release
