@@ -24,25 +24,25 @@ jobs:
         if: matrix.os != 'windows-latest'
         run: |
           . .venv/bin/activate
-          pyinstaller --name="onedirapp" --windowed --onedir main.py
+          pyinstaller --name="testapp" --windowed --onedir main.py
 
       - name: Build Executable for Windows
         if: matrix.os == 'windows-latest'
         run: |
           .venv/scripts/activate.ps1
-          pyinstaller --name="onedirapp" --windowed --onedir main.py
+          pyinstaller --name="testapp" --windowed --onedir main.py
 
       - name: Archive Binaries
         uses: thedoctor0/zip-release@0.7.5
         with:
           type: 'zip'
-          filename: release-${{ matrix.os }}.zip
-          directory: 'dist/onedirapp'
+          filename: release.zip
+          directory: 'dist/testapp'
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: release-${{ matrix.os }}.zip
+          file: release.zip
           asset_name: app-${{ matrix.os }}.zip
           tag: ${{ github.ref }}
