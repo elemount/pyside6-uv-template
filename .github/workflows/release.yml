@@ -1,9 +1,8 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  release:
+    types: [created]
 
 jobs:
   build:
@@ -41,9 +40,8 @@ jobs:
 
       - name: Upload Release
         uses: actions/upload-release-asset@v1
-        if: success()
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{ github.event.release.upload_url }}
           asset_path: |
             dist/app*
           asset_name: app-${{ matrix.os }}
